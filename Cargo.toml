@@ -5,6 +5,7 @@ version = "0.1.0"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+
 cortex-m = "0.7"
 cortex-m-rt = "0.7"
 embedded-hal = { version = "0.2.5", features = ["unproven"] }
@@ -15,13 +16,11 @@ panic-probe = { version = "0.3", features = ["print-defmt"] }
 
 # We're using a Pico by default on this template
 rp-pico = "0.7"
-
-# but you can use any BSP. Uncomment this to use the pro_micro_rp2040 BSP instead
-# sparkfun-pro-micro-rp2040 = "0.6"
-
-# If you're not going to use a Board Support Package you'll need these:
-# rp2040-hal = { version="0.8", features=["rt", "critical-section-impl"] }
-# rp2040-boot2 = "0.2"
+embassy-embedded-hal = { path = "../embassy/embassy-embedded-hal", features = ["defmt"] }
+embassy-sync = { path = "../embassy/embassy-sync", features = ["defmt"] }
+embassy-executor = { features = ["nightly", "arch-cortex-m", "defmt", "executor-thread", "executor-interrupt", "integrated-timers"], path = "../embassy/embassy-executor" }
+embassy-time = { path = "../embassy/embassy-time", features = ["nightly", "unstable-traits", "defmt", "defmt-timestamp-uptime"] }
+embassy-rp = { path = "../embassy/embassy-rp", features = ["nightly", "unstable-traits", "defmt", "unstable-pac", "time-driver", "critical-section-impl"] }
 
 # cargo build/run
 [profile.dev]
