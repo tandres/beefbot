@@ -22,8 +22,11 @@ async fn main(_spawner: Spawner) {
 
     let vl53l1x_addr = 0b0101001;  
     let new_addr = 0b0101000;
-    let chip_addr_reg_addr = 0x0001_u16.to_le_bytes();
+    let chip_addr_reg_addr = 0x0001_u16.to_be_bytes();
     let mut buf = [0; 2];
+
+    let res = i2c.write_read(vl53l1x_addr, &chip_addr_reg_addr, &mut buf);
+    info!("res: {:?}: {:x}", res, buf);
     let res = i2c.write(vl53l1x_addr, &chip_addr_reg_addr);
     info!("res: {:?}: {:x}", res, buf);
     let res = i2c.write(vl53l1x_addr, &[new_addr]);
@@ -33,13 +36,13 @@ async fn main(_spawner: Spawner) {
     let res = i2c.write_read(vl53l1x_addr, &chip_addr_reg_addr, &mut buf);
     info!("res: {:?}: {:x}", res, buf);
 
-    loop {
+    /*loop {
         info!("led on");
         led.set_high();
         Timer::after(Duration::from_secs(1)).await;
         info!("led off");
         led.set_low();
         Timer::after(Duration::from_secs(1)).await;
-    }
+    }*/
 }
 
